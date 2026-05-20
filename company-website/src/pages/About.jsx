@@ -13,10 +13,12 @@ const VALUES = [
 ];
 
 const TEAM = [
-  { name: 'Alex Hemmingway', role: 'Founder & CEO', Icon: Briefcase },
-  { name: 'Natasha Voss', role: 'CTO', Icon: Code },
-  { name: 'James Park', role: 'Head of Design', Icon: Palette },
-  { name: 'Layla Osei', role: 'Engineering Lead', Icon: Cog },
+  { name: 'Devyansh Dingolia', role: 'Chief Executive Officer', Icon: Briefcase },
+  { name: 'Janardhan Verma', role: 'Chief Technology Officer & Co-CEO', Icon: Code },
+  { name: 'Yash Kumar', role: 'Chief Finance Officer', Icon: Palette },
+  { name: 'Manish Mandia', role: 'Chief Product Officer', Icon: Cog },
+  { name: 'Sakshi Yadav', role: 'Chief Marketing Officer', Icon: Palette },
+  { name: 'Bhardwaj Kartikay', role: 'Chief Operations Officer', Icon: Palette },
 ];
 
 export default function About() {

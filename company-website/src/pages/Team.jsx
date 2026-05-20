@@ -4,43 +4,43 @@ import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
 
 const TEAM_MEMBERS = [
   {
-    name: 'Alex Hemmingway',
-    role: 'Founder & CEO',
+    name: 'Devyansh Dingolia',
+    role: 'Chief Executive Officer',
     bio: 'Visionary leader with 15+ years in enterprise software. Obsessed with building teams that ship.' ,
     Icon: Briefcase,
     expertise: ['Strategy', 'Leadership', 'Architecture']
   },
   {
-    name: 'Natasha Voss',
-    role: 'Chief Technology Officer',
+    name: 'Janardhan Verma',
+    role: 'Chief Technology Officer & Co-CEO',
     bio: 'Former Google engineer. Architect of our entire infrastructure and AI initiatives.',
     Icon: Code,
     expertise: ['AI/ML', 'Cloud', 'DevOps']
   },
   {
-    name: 'James Park',
-    role: 'Head of Design',
+    name: 'Yash Kumar',
+    role: 'Chief Finance Officer',
     bio: 'Award-winning designer who believes code and design are inseparable.',
     Icon: Palette,
     expertise: ['UI/UX', 'Design Systems', 'Branding']
   },
   {
-    name: 'Layla Osei',
-    role: 'Engineering Lead',
+    name: 'Manish Mandia',
+    role: 'Chief Product Officer',
     bio: 'Full-stack wizard. Mentor to 12+ junior engineers and obsessive about code quality.',
     Icon: Cog,
     expertise: ['Full Stack', 'Mentorship', 'Performance']
   },
   {
-    name: 'Marcus Chen',
-    role: 'Senior Frontend Engineer',
+    name: 'Sakshi Yadav',
+    role: 'Chief Marketing Officer',
     bio: 'React expert. Builds pixel-perfect interfaces that perform flawlessly at scale.',
     Icon: Monitor,
     expertise: ['React', 'Performance', 'Animation']
   },
   {
-    name: 'Elena Rodriguez',
-    role: 'Security & Compliance Lead',
+    name: 'Bhardwaj Kartikay',
+    role: 'Chief Operations Officer',
     bio: 'Keeps us safe. Former cybersecurity researcher with passion for zero-trust architecture.',
     Icon: Lock,
     expertise: ['Security', 'Compliance', 'Cryptography']
@@ -55,7 +55,7 @@ export default function Team() {
   return (
     <>
       {/* ── PAGE HERO ── */}
-      <section className="page-hero" style={{ backgroundImage: 'url("/bg-hero.png")' }}>
+      <section className="page-hero">
         <div className="page-hero-glow" />
         <div className="container">
           <div className="tag">Our Team</div>
