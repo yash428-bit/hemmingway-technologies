@@ -97,27 +97,7 @@ export default function About() {
       </section>
 
       {/* ── TEAM ── */}
-      <section className="team-section">
-        <div className="container">
-          <div className="section-header centered fade-up">
-            <div className="tag">The Team</div>
-            <h2>Meet the people<br />behind the magic</h2>
-            <p>A passionate team of engineers, designers, and strategists obsessed with craft.</p>
-          </div>
-          <div className="team-grid">
-            {TEAM.map((member, i) => {
-              const IconComponent = member.Icon;
-              return (
-                <div key={i} className="team-card fade-up" style={{ transitionDelay: `${i * 0.1}s` }}>
-                  <div className="team-card-img"><IconComponent size={32} /></div>
-                  <div className="team-name">{member.name}</div>
-                  <div className="team-role">{member.role}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      
 
       {/* ── CTA ── */}
       <section className="cta-section">
