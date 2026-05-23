@@ -284,17 +284,7 @@
   min-width: 380px;
 }
 
-@media (max-width: 1024px) {
-  .dropdown-cols-2 {
-    grid-template-columns: 1fr;
-    min-width: 280px;
-  }
 
-  .dropdown-products {
-    grid-template-columns: 1fr;
-    min-width: 280px;
-  }
-}
 
 .dropdown-section-label {
   font-size: 10px;
@@ -506,17 +496,7 @@
   background: var(--primary);
 }
 
-@media (max-width: 960px) {
 
-  .nav-menu-center,
-  .nav-cta {
-    display: none;
-  }
-
-  .nav-hamburger {
-    display: flex;
-  }
-}
 
 /* ── MOBILE MENU ── */
 .mobile-menu {
@@ -844,11 +824,7 @@
   }
 }
 
-@media (max-width: 768px) {
-  .hero h1 {
-    letter-spacing: -1px;
-  }
-}
+
 
 /* ============================================================
    FOOTER (DevStudio style)
@@ -969,28 +945,3 @@
   mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.1) 100%);
 }
 
-@media (max-width: 1024px) {
-  .ftr-cols {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .ftr-main {
-    flex-direction: column;
-    padding: 40px 32px 36px;
-    gap: 40px;
-  }
-
-  .ftr-watermark {
-    padding: 0 20px;
-    font-size: clamp(56px, 16vw, 120px);
-  }
-}
-
-@media (max-width: 480px) {
-  .ftr-cols {
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-  }
-}

@@ -122,7 +122,6 @@ function ThemeToggle({ theme, toggle }) {
 ───────────────────────────────────────── */
 export default function Navbar({ theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
   const location = useLocation();
 
@@ -132,7 +131,7 @@ export default function Navbar({ theme, toggleTheme }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMobileOpen(false); setActiveMenu(null); window.scrollTo(0, 0); }, [location.pathname]);
+  useEffect(() => { setActiveMenu(null); window.scrollTo(0, 0); }, [location.pathname]);
 
   const isActive = p => location.pathname === p;
 
@@ -175,34 +174,47 @@ export default function Navbar({ theme, toggleTheme }) {
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
+        </div>
 
-          {/* ── HAMBURGER ── */}
-          <button className={`nav-hamburger${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
-            <span /><span /><span />
-          </button>
+        <div className="nav-inner-mob">
+
+          <div className="logo">
+            {/* ── LOGO: leaf icon + brand text ── */}
+            <Link to="/" className="nav-logo">
+              <img src="/logo-icon.png" alt="" className="nav-logo-icon" />
+              <div className="nav-logo-text">
+                <span className="nav-logo-name">Hemmingway</span>
+                <span className="nav-logo-sub">Technologies</span>
+              </div>
+            </Link>
+
+            {/* ── RIGHT ── */}
+            <div className="nav-cta">
+              <ThemeToggle theme={theme} toggle={toggleTheme} />
+              <Link to="/contact" className="nav-btn primary">
+                Get in Touch
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
+          </div>
+          {/* ── CENTER: Aceternity-style menu ── */}
+          <div className="nav-menu-center">
+            <NavLink to="/" label="Home" isActive={isActive('/')} />
+            <NavLink to="/about" label="About" isActive={isActive('/about')} />
+            <NavLink to="/team" label="Team" isActive={isActive('/team')} />
+            <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} />
+
+            <MenuItem label="Solutions" active={activeMenu} setActive={setActiveMenu}>
+              <div className="dropdown-products">
+                <ProductItem Icon={Rocket} title="Launchpad" description="From idea to production-ready MVP in 6 weeks." href="#" />
+                <ProductItem Icon={Brain} title="AI Suite" description="Custom LLM integrations & intelligent automation." href="#" />
+                <ProductItem Icon={Cloud} title="CloudOps" description="Managed cloud infrastructure at enterprise scale." href="#" />
+                <ProductItem Icon={Lock} title="SecureStack" description="Full-stack security audit & hardening service." href="#" />
+              </div>
+            </MenuItem>
+          </div>
         </div>
       </nav>
-
-      {/* ── MOBILE MENU ── */}
-      <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
-        <div className="mobile-menu-logo">
-          <img src="/logo-icon.png" alt="" style={{ height: 36, filter: 'drop-shadow(0 0 12px rgba(99,103,241,0.6))' }} />
-          <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', fontFamily: 'var(--heading)' }}>Hemmingway<br /><span style={{ color: 'var(--primary)' }}>Technologies</span></span>
-        </div>
-        <div className="mobile-menu-links">
-          {[['/', 'Home'], ['/about', 'About'], ['/team', 'Team'], ['/blog', 'Blog'], ['/contact', 'Contact']].map(([to, label], i) => (
-            <Link key={to} to={to} className="mobile-link" onClick={() => setMobileOpen(false)}>
-              <span className="mobile-link-num">0{i + 1}</span>{label}
-            </Link>
-          ))}
-        </div>
-        <div className="mobile-menu-footer">
-          <ThemeToggle theme={theme} toggle={toggleTheme} />
-          <Link to="/contact" className="nav-btn primary" onClick={() => setMobileOpen(false)}>Start a Project →</Link>
-        </div>
-        <div className="mobile-orb mobile-orb-1" />
-        <div className="mobile-orb mobile-orb-2" />
-      </div>
     </>
   );
 }

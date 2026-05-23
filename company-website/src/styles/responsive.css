@@ -1,0 +1,163 @@
+@media (min-width: 451px) {
+    .nav-inner-mob {
+        display: none !important;
+    }
+}
+
+@media (max-width: 450px) {
+    .nav-inner {
+        display: none !important;
+    }
+
+    .nav-inner-mob {
+        width: 100%;
+        max-width: 100vw;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px;
+    }
+
+    .nav-menu-center {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center !important;
+    }
+
+    .nav-inner-mob .menu-item-wrap {
+        position: static !important;
+    }
+
+    .nav-inner-mob .menu-dropdown {
+        position: absolute !important;
+        top: 100% !important; /* Positions it right underneath the second row */
+        left: 8px !important;  /* Centers it on screen with equal margins */
+        right: 8px !important;
+        width: calc(100vw - 16px) !important; /* Auto-calculates safe mobile width */
+        max-width: none !important;
+        transform: none !important; /* Removes the problematic desktop centering rule */
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+        box-sizing: border-box !important;
+    }
+
+    .nav-inner-mob .dropdown-products {
+        width: 100% !important;
+        min-width: 100% !important;
+        gap: 8px !important;
+    }
+
+    .nav-inner-mob .menu-dropdown::before {
+        left: 85% !important; 
+    }
+
+    .hero {
+        min-height: 90vh !important;
+    }
+
+    .hero-content {
+        padding-top: 130px !important;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bento-1,
+    .bento-2,
+    .bento-3,
+    .bento-4 {
+        grid-column: span 12 !important;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .cta-inner {
+        padding: 50px 40px !important;
+    }
+
+    .cta-inner h2 {
+        font-size: clamp(24px, 6.3vw, 36px) !important;
+        line-height: 1.2 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
+
+    .about-story-inner,
+    .values-grid,
+    .team-grid,
+    .culture-grid,
+    .blog-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .team-cta {
+        margin: 10px !important;
+    }
+
+    .blog-filters {
+        padding-top: 140px !important;
+    }
+
+    .blog-subscribe {
+        padding: 40px 0 !important;
+        margin: 10px;
+    }
+
+    .subscribe-box {
+        padding: 40px !important;
+    }
+
+    .subscribe-form {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+
+    .ftr-main {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 40px 20px 32px !important;
+        gap: 40px !important;
+    }
+
+    .ftr-brand {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+    }
+
+    .ftr-brand-id {
+        justify-content: center !important;
+    }
+
+    .ftr-copyright {
+        text-align: center !important;
+        font-size: 13px !important;
+        line-height: 1.6 !important;
+    }
+
+    .ftr-cols {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 32px 24px !important;
+        width: 100% !important;
+    }
+
+    .ftr-watermark {
+        font-size: clamp(48px, 15vw, 100px) !important;
+        letter-spacing: -2px !important;
+        padding: 0 16px !important;
+        margin-top: 16px !important;
+    }
+}

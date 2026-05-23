@@ -131,17 +131,7 @@
   line-height: 1.7;
 }
 
-@media (max-width: 1024px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 640px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ========= BENTO ========= */
 .bento {
@@ -284,15 +274,7 @@
   }
 }
 
-@media (max-width: 1024px) {
 
-  .bento-1,
-  .bento-2,
-  .bento-3,
-  .bento-4 {
-    grid-column: span 12;
-  }
-}
 
 /* ========= TESTIMONIALS ========= */
 .testimonials {
@@ -375,17 +357,7 @@
   margin-bottom: 16px;
 }
 
-@media (max-width: 1024px) {
-  .testimonials-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 640px) {
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ========= CTA SECTION ========= */
 .cta-section {
@@ -431,11 +403,7 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 768px) {
-  .cta-inner {
-    padding: 60px 32px;
-  }
-}
+
 
 /* ========= SECTION HEADER ========= */
 .section-header {
@@ -627,41 +595,7 @@
 }
 
 /* responsive */
-@media (max-width: 1200px) {
-  .footer-v2-cols {
-    grid-template-columns: repeat(3, auto);
-    gap: 36px;
-  }
-}
 
-@media (max-width: 900px) {
-  .footer-v2-top {
-    flex-direction: column;
-    padding: 48px 32px 40px;
-  }
-
-  .footer-v2-brand {
-    width: 100%;
-  }
-
-  .footer-v2-cols {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-v2-bottom {
-    padding: 18px 32px;
-  }
-}
-
-@media (max-width: 560px) {
-  .footer-v2-cols {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .footer-v2-watermark {
-    font-size: 52px;
-  }
-}
 
 
 /* ========= SECTION HEADER ========= */
