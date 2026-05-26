@@ -36,12 +36,12 @@
 
     .nav-inner-mob .menu-dropdown {
         position: absolute !important;
-        top: 100% !important; /* Positions it right underneath the second row */
-        left: 8px !important;  /* Centers it on screen with equal margins */
+        top: 100% !important;
+        left: 8px !important;
         right: 8px !important;
-        width: calc(100vw - 16px) !important; /* Auto-calculates safe mobile width */
+        width: calc(100vw - 16px) !important;
         max-width: none !important;
-        transform: none !important; /* Removes the problematic desktop centering rule */
+        transform: none !important;
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
         box-sizing: border-box !important;
     }
@@ -53,7 +53,7 @@
     }
 
     .nav-inner-mob .menu-dropdown::before {
-        left: 85% !important; 
+        left: 85% !important;
     }
 
     .hero {
@@ -101,6 +101,10 @@
 
     .team-cta {
         margin: 10px !important;
+    }
+
+    .team-section {
+        padding-top: 140px !important;
     }
 
     .blog-filters {
