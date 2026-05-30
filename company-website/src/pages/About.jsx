@@ -28,6 +28,15 @@ export default function About() {
 
   return (
     <>
+      <Helmet>
+        <title>About Us | Hemmingway Technologies</title>
+
+        <meta
+          name="description"
+          content="Learn about Hemmingway Technologies, our mission, team, and vision for AI-powered software innovation."
+        />
+      </Helmet>
+
       {/* ── PAGE HERO ── */}
       <section className="page-hero" style={{ backgroundImage: 'url("/bg-hero.png")' }}>
         <div className="page-hero-glow" />
@@ -95,9 +104,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      {/* ── TEAM ── */}
-      
 
       {/* ── CTA ── */}
       <section className="cta-section">

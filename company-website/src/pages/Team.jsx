@@ -6,7 +6,7 @@ const TEAM_MEMBERS = [
   {
     name: 'Devyansh Dingolia',
     role: 'Chief Executive Officer',
-    bio: 'Visionary leader with 15+ years in enterprise software. Obsessed with building teams that ship.' ,
+    bio: 'Visionary leader with 15+ years in enterprise software. Obsessed with building teams that ship.',
     Icon: Briefcase,
     expertise: ['Strategy', 'Leadership', 'Architecture']
   },
@@ -18,7 +18,6 @@ const TEAM_MEMBERS = [
     expertise: ['AI/ML', 'Cloud', 'DevOps']
   },
   {
-    
     name: 'Manish Mandia',
     role: 'Chief Product Officer',
     bio: 'Full-stack wizard. Mentor to 12+ junior engineers and obsessive about code quality.',
@@ -55,6 +54,15 @@ export default function Team() {
 
   return (
     <>
+      <Helmet>
+        <title>Our Team | Hemmingway Technologies</title>
+
+        <meta
+          name="description"
+          content="Meet the team behind Hemmingway Technologies. Our engineers, designers, and innovators are dedicated to building impactful software, AI solutions, and digital products."
+        />
+      </Helmet>
+
       {/* ── TEAM GRID ── */}
       <section className="team-section">
         <div className="container">

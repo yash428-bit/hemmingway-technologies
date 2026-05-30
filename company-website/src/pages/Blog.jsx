@@ -84,7 +84,15 @@ export default function Blog() {
 
   return (
     <>
-      
+      <Helmet>
+        <title>Blog | Hemmingway Technologies</title>
+
+        <meta
+          name="description"
+          content="Insights, technical articles, industry trends, and updates from Hemmingway Technologies on software engineering, artificial intelligence, cybersecurity, cloud computing, and digital innovation."
+        />
+      </Helmet>
+
       {/* ── CATEGORY FILTER ── */}
       <section className="blog-filters">
         <div className="container">

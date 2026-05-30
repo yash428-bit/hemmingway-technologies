@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Brain, Cloud, Lock, Smartphone, Link as LinkIcon, BarChart3, Bot, Globe } from 'lucide-react';
 import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
+import { Helmet } from "react-helmet-async";
 import EncryptedText from '../components/ui/EncryptedText';
 import CometCard from '../components/ui/CometCard';
 
@@ -50,6 +51,15 @@ export default function Home() {
 
   return (
     <>
+      <Helmet>
+        <title>Hemmingway Technologies | AI-Powered Software Safety Solutions</title>
+
+        <meta
+          name="description"
+          content="Hemmingway Technologies develops AI-powered software, cloud infrastructure, cybersecurity, and industrial safety solutions."
+        />
+      </Helmet>
+
       {/* ── HERO ── */}
       <section className="hero">
         <div className="hero-bg" />
@@ -73,7 +83,7 @@ export default function Home() {
           <div className="hero-cta">
             <Link to="/contact" className="btn-primary">
               Start a Project
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
             <Link to="/about" className="btn-ghost">Our Story</Link>
           </div>
@@ -224,7 +234,7 @@ export default function Home() {
             <div className="cta-buttons">
               <Link to="/contact" className="btn-primary">
                 Start Your Project
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </Link>
               <Link to="/about" className="btn-ghost">Meet the Team</Link>
             </div>
