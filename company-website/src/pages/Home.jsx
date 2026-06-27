@@ -15,21 +15,6 @@ const SERVICES = [
   { Icon: LinkIcon, title: 'API & Integrations', desc: 'Seamless connectivity between your tools, platforms, and third-party services.' },
 ];
 
-const TESTIMONIALS = [
-  {
-    text: "Hemmingway Technologies transformed our legacy system into a modern, AI-powered platform. Delivery was ahead of schedule and the quality was exceptional.",
-    name: 'Sarah Chen', role: 'CTO, Nexus Corp', initial: 'S',
-  },
-  {
-    text: "Their cloud architecture reduced our infrastructure costs by 60% while improving performance threefold. Truly remarkable engineering.",
-    name: 'Marcus Reid', role: 'VP Engineering, Orbit Labs', initial: 'M',
-  },
-  {
-    text: "The mobile app they built for us hit 50k downloads in the first month. The attention to detail in the UX was outstanding.",
-    name: 'Priya Nair', role: 'Product Lead, Vela Health', initial: 'P',
-  },
-];
-
 const MARQUEE_ITEMS = [
   { Icon: Zap, text: 'Custom Software' },
   { Icon: Brain, text: 'Artificial Intelligence' },
@@ -173,7 +158,7 @@ export default function Home() {
                 <p>Every product we build can integrate machine learning — from recommendation engines to predictive analytics.</p>
                 <div style={{ marginTop: '24px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   {['GPT-4o', 'Gemini', 'Claude', 'LLaMA', 'Custom Models'].map((t) => (
-                    <span key={t} style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: 600 }}>{t}</span>
+                    <span key={t} style={{ background: 'var(--primary)', color: '#fff', borderRadius: '6px', padding: '4px 10px', fontSize: '12px', fontWeight: 600 }}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -188,7 +173,7 @@ export default function Home() {
                   {[['150+', 'Projects'], ['98%', 'Retention'], ['24/7', 'Support']].map(([n, l]) => (
                     <div key={l}>
                       <div style={{ fontSize: '32px', fontWeight: 800, background: 'linear-gradient(135deg, #fff, var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{n}</div>
-                      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '4px' }}>{l}</div>
+                      <div style={{ fontSize: '13px', color: 'var(--text-bright)', opacity: 0.7, marginTop: '4px' }}>{l}</div>
                     </div>
                   ))}
                 </div>
@@ -198,31 +183,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="testimonials">
-        <div className="container">
-          <div className="section-header centered fade-up">
-            <div className="tag">Client Stories</div>
-            <h2>Trusted by teams<br />around the world</h2>
-            <p>Don't take our word for it — here's what our clients say.</p>
-          </div>
-          <div className="testimonials-grid">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="testimonial-card fade-up" style={{ transitionDelay: `${i * 0.15}s` }}>
-                <div className="stars">★★★★★</div>
-                <p className="testimonial-text">"{t.text}"</p>
-                <div className="testimonial-author">
-                  <div className="testimonial-avatar">{t.initial}</div>
-                  <div>
-                    <div className="testimonial-name">{t.name}</div>
-                    <div className="testimonial-role">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* ── CTA ── */}
       <section className="cta-section">

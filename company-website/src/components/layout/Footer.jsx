@@ -52,7 +52,7 @@ export default function Footer() {
         {/* LEFT: brand + copyright */}
         <div className="ftr-brand">
           <div className="ftr-brand-id">
-            <img src="/logo-icon.png" alt="Hemmingway" className="ftr-brand-icon" />
+            <img src="/logo-icon.webp" alt="Hemmingway" className="ftr-brand-icon" />
             <span className="ftr-brand-name">Hemmingway Technologies</span>
           </div>
           <p className="ftr-copyright">
@@ -64,7 +64,7 @@ export default function Footer() {
         <div className="ftr-cols">
           {COLS.map(col => (
             <div key={col.title} className="ftr-col">
-              <h5 className="ftr-col-title">{col.title}</h5>
+              <p className="ftr-col-title">{col.title}</p>
               <ul>
                 {col.links.map(link => (
                   <li key={link.label}>

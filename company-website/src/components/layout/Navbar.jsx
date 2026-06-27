@@ -142,7 +142,7 @@ export default function Navbar({ theme, toggleTheme }) {
 
           {/* ── LOGO: leaf icon + brand text ── */}
           <Link to="/" className="nav-logo">
-            <img src="/logo-icon.png" alt="" className="nav-logo-icon" />
+            <img src="/logo-icon.webp" alt="" className="nav-logo-icon" />
             <div className="nav-logo-text">
               <span className="nav-logo-name">Hemmingway</span>
               <span className="nav-logo-sub">Technologies</span>
@@ -181,7 +181,7 @@ export default function Navbar({ theme, toggleTheme }) {
           <div className="logo">
             {/* ── LOGO: leaf icon + brand text ── */}
             <Link to="/" className="nav-logo">
-              <img src="/logo-icon.png" alt="" className="nav-logo-icon" />
+              <img src="/logo-icon.webp" alt="" className="nav-logo-icon" />
               <div className="nav-logo-text">
                 <span className="nav-logo-name">Hemmingway</span>
                 <span className="nav-logo-sub">Technologies</span>
