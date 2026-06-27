@@ -15,7 +15,7 @@ export default function Loader({ onComplete }) {
 
   return (
     <div className="loader" ref={loaderRef}>
-      <img src="/logo-icon.png" alt="Loading" className="loader-logo" />
+      <img src="/logo-icon.webp" alt="Loading" className="loader-logo" />
       <div className="loader-bar">
         <div className="loader-fill" />
       </div>

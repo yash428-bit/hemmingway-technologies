@@ -48,7 +48,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--text-muted);
+  color: var(--text-bright);
+  opacity: 0.7;
   font-size: 14px;
   font-weight: 500;
 }
@@ -189,8 +190,8 @@
 
 .bento-badge {
   display: inline-block;
-  background: var(--primary-light);
-  color: var(--primary);
+  background: var(--primary);
+  color: #fff;
   border-radius: 6px;
   padding: 4px 10px;
   font-size: 12px;

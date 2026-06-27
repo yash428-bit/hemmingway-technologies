@@ -39,7 +39,7 @@ export default function About() {
       </Helmet>
 
       {/* ── PAGE HERO ── */}
-      <section className="page-hero" style={{ backgroundImage: 'url("/bg-hero.png")' }}>
+      <section className="page-hero" style={{ backgroundImage: 'url("/bg-hero.webp")' }}>
         <div className="page-hero-glow" />
         <div className="container">
           <div className="tag">About Us</div>
