@@ -253,6 +253,7 @@
 
 .form-group {
   margin-bottom: 20px;
+  position: relative;
 }
 
 .form-group label {
@@ -264,36 +265,123 @@
   letter-spacing: 0.3px;
 }
 
+/* ── Base input / select / textarea ── */
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 12px;
   padding: 14px 18px;
   color: var(--text-bright);
   font-family: var(--sans);
   font-size: 15px;
-  transition: all 0.3s;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   outline: none;
   resize: none;
+  /* Ensure typed text is always high-contrast, never inherits muted/placeholder colour */
+  -webkit-text-fill-color: var(--text-bright);
 }
 
+/* ── Accessible focus ring ── */
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--primary);
   background: rgba(99, 103, 241, 0.06);
+  box-shadow: 0 0 0 3px rgba(99, 103, 241, 0.28), 0 0 12px rgba(99, 103, 241, 0.15);
 }
 
+/* ── Placeholder colour ── */
 .form-group input::placeholder,
 .form-group textarea::placeholder {
   color: var(--text-muted);
+  -webkit-text-fill-color: var(--text-muted);
+  opacity: 1;
 }
 
-.form-group select {
+/* ── Error state ── */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+  border-color: #f43f5e;
+  background: rgba(244, 63, 94, 0.06);
+  animation: shake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.form-group.has-error input:focus,
+.form-group.has-error select:focus,
+.form-group.has-error textarea:focus {
+  border-color: #f43f5e;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.22), 0 0 12px rgba(244, 63, 94, 0.12);
+}
+
+.form-error-msg {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #f43f5e;
+  font-family: var(--sans);
+  letter-spacing: 0.2px;
+}
+
+.form-group.has-error .form-error-msg {
+  display: flex;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+/* ── Select wrapper with custom chevron ── */
+.select-wrapper {
+  position: relative;
+  display: block;
+}
+
+.select-wrapper select {
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* extra right padding so text doesn't overlap the chevron */
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.select-chevron {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--text-muted);
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrapper:focus-within .select-chevron {
+  color: var(--primary);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.form-group.has-error .select-chevron {
+  color: #f43f5e;
+}
+
+/* ── Auto-expand textarea ── */
+.form-group textarea {
+  overflow-y: hidden;
+  min-height: 120px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, height 0.1s ease;
 }
 
 .form-submit {
@@ -312,9 +400,50 @@
   gap: 10px;
 }
 
-.form-submit:hover {
+.form-submit:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px var(--primary-glow);
+}
+
+.form-submit:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Disabled field appearance while sending ── */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Server-level error banner ── */
+.form-server-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  background: rgba(244, 63, 94, 0.08);
+  border: 1.5px solid rgba(244, 63, 94, 0.4);
+  border-radius: 12px;
+  color: #fca5a5;
+  font-size: 14px;
+  font-family: var(--sans);
+  line-height: 1.5;
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Spinner animation for loading state ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .form-success {
