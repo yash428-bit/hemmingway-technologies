@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react'; // ChevronLeft/Right still used in lightbox
 
 const PHOTOS = [
   {
@@ -87,13 +87,9 @@ export default function SIHGallery() {
             </button>
           </div>
 
-          {/* Arrows */}
-          <button className="sih-arrow sih-arrow-prev" onClick={prev} aria-label="Previous">
-            <ChevronLeft size={22} />
-          </button>
-          <button className="sih-arrow sih-arrow-next" onClick={next} aria-label="Next">
-            <ChevronRight size={22} />
-          </button>
+          {/* Click zones */}
+          <button className="sih-click-prev" onClick={prev} aria-label="Previous" />
+          <button className="sih-click-next" onClick={next} aria-label="Next" />
         </div>
 
         {/* Thumbnail Strip */}

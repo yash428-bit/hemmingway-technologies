@@ -23,10 +23,10 @@ const COLS = [
   {
     title: 'Legal',
     links: [
-      { label: 'Privacy Policy', href: '/privacy-policy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookie-policy' },
-      { label: 'Disclaimer', href: '/disclaimer' },
+      { label: 'Privacy Policy', to: '/docs/legal/privacy-policy' },
+      { label: 'Terms of Service', to: '/docs/legal/terms' },
+      { label: 'Cookie Policy', to: '/docs/legal/cookie-policy' },
+      { label: 'Disclaimer', to: '/docs/legal/disclaimer' },
     ],
   },
   {
