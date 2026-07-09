@@ -1,0 +1,9 @@
+# ── Backend secrets ──
+.env
+
+# ── Node modules ──
+node_modules/
+
+# ── Logs ──
+*.log
+npm-debug.log*
