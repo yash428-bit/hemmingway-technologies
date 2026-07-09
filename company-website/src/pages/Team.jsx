@@ -7,42 +7,42 @@ const TEAM_MEMBERS = [
   {
     name: 'Devyansh Dingolia',
     role: 'Chief Executive Officer',
-    bio: 'Visionary leader with 15+ years in enterprise software. Obsessed with building teams that ship.',
+    bio: '',
     Icon: Briefcase,
     expertise: ['Strategy', 'Leadership', 'Architecture']
   },
   {
     name: 'Janardhan Verma',
     role: 'Chief Technology Officer & Co-CEO',
-    bio: 'Former Google engineer. Architect of our entire infrastructure and AI initiatives.',
+    bio: '',
     Icon: Code,
     expertise: ['AI/ML', 'Cloud', 'DevOps']
   },
   {
     name: 'Manish Mandia',
     role: 'Chief Product Officer',
-    bio: 'Full-stack wizard. Mentor to 12+ junior engineers and obsessive about code quality.',
+    bio: '',
     Icon: Cog,
     expertise: ['Full Stack', 'UI/UX', 'Performance']
   },
   {
     name: 'Yash Kumar',
     role: 'Chief Finance Officer',
-    bio: 'Award-winning designer who believes code and design are inseparable.',
+    bio: '',
     Icon: Palette,
     expertise: ['UI/UX', 'Design Systems', 'Branding']
   },
   {
     name: 'Sakshi Yadav',
     role: 'Chief Marketing Officer',
-    bio: 'React expert. Builds pixel-perfect interfaces that perform flawlessly at scale.',
+    bio: '',
     Icon: Monitor,
-    expertise: ['React', 'Performance', 'Animation']
+    expertise: ['Marketing', 'Performance', 'Animation']
   },
   {
     name: 'Bhardwaj Kartikay',
     role: 'Chief Operations Officer',
-    bio: 'Keeps us safe. Former cybersecurity researcher with passion for zero-trust architecture.',
+    bio: '',
     Icon: Lock,
     expertise: ['Security', 'Compliance', 'Cryptography']
   },
