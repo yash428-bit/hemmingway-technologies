@@ -1,31 +1,26 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react'; // ChevronLeft/Right still used in lightbox
 
 const PHOTOS = [
   {
-    src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
+    src: '/SIH photos/team photos.jfif',
+    caption: 'Team Vajra Dev at Smart India Hackathon 2024',
     label: 'Grand Finale — SIH 2024',
   },
   {
-    src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    src: '/SIH photos/team photo 2.jfif',
+    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
+    label: 'Victory Moment',
+  },
+  {
+    src: '/SIH photos/explaing to judges.jfif',
     caption: 'Presenting our Ministry of Coal app prototype to the judges',
     label: 'Project Presentation',
   },
   {
-    src: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Late-night hustle — 36 hours of coding, zero sleep',
-    label: 'The Grind',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Receiving the winning certificate from the jury panel',
+    src: '/SIH photos/taking trophy.jfif',
+    caption: 'Receiving the winning trophy — ₹1,50,000 prize',
     label: 'Award Ceremony',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'The moment that sparked the founding of Hemmingway Technologies',
-    label: 'The Spark 🚀',
   },
 ];
 
@@ -92,13 +87,9 @@ export default function SIHGallery() {
             </button>
           </div>
 
-          {/* Arrows */}
-          <button className="sih-arrow sih-arrow-prev" onClick={prev} aria-label="Previous">
-            <ChevronLeft size={22} />
-          </button>
-          <button className="sih-arrow sih-arrow-next" onClick={next} aria-label="Next">
-            <ChevronRight size={22} />
-          </button>
+          {/* Click zones */}
+          <button className="sih-click-prev" onClick={prev} aria-label="Previous" />
+          <button className="sih-click-next" onClick={next} aria-label="Next" />
         </div>
 
         {/* Thumbnail Strip */}
