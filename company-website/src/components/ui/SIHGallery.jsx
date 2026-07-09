@@ -3,29 +3,24 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 
 const PHOTOS = [
   {
-    src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
+    src: '/SIH photos/team photos.jfif',
+    caption: 'Team Vajra Dev at Smart India Hackathon 2024',
     label: 'Grand Finale — SIH 2024',
   },
   {
-    src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    src: '/SIH photos/team photo 2.jfif',
+    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
+    label: 'Victory Moment',
+  },
+  {
+    src: '/SIH photos/explaing to judges.jfif',
     caption: 'Presenting our Ministry of Coal app prototype to the judges',
     label: 'Project Presentation',
   },
   {
-    src: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Late-night hustle — 36 hours of coding, zero sleep',
-    label: 'The Grind',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Receiving the winning certificate from the jury panel',
+    src: '/SIH photos/taking trophy.jfif',
+    caption: 'Receiving the winning trophy — ₹1,50,000 prize',
     label: 'Award Ceremony',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1528901166007-3784c7dd3653?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'The moment that sparked the founding of Hemmingway Technologies',
-    label: 'The Spark 🚀',
   },
 ];
 
