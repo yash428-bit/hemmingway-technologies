@@ -1,7 +1,7 @@
 {
   "name": "hemmingway-mailer-backend",
   "version": "1.0.0",
-  "description": "Nodemailer email backend for Hemmingway Technologies contact form",
+  "description": "Resend email backend for Hemmingway Technologies contact form",
   "main": "mailer.js",
   "type": "commonjs",
   "scripts": {
@@ -12,7 +12,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "nodemailer": "^6.10.1"
+    "resend": "^4.6.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

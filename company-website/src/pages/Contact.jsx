@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { CheckCircle, ChevronDown, AlertCircle, Loader2, XCircle } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useAnimations';
 import { Helmet } from 'react-helmet-async';
+import Toast from '../components/ui/Toast';
 
 // ── API endpoint ───────────────────────────────────────────────────────────────
 // Dev  → Vite proxy forwards /api/* to http://localhost:5000
@@ -41,6 +42,7 @@ export default function Contact() {
   const [errors,    setErrors]    = useState({});
   const [status,    setStatus]    = useState('idle'); // idle | loading | success | error
   const [serverMsg, setServerMsg] = useState('');
+  const [toast,     setToast]     = useState(null);  // { message, type } | null
 
   const textareaRef = useRef(null);
 
@@ -85,10 +87,23 @@ export default function Contact() {
         body:    JSON.stringify(form),
       });
 
-      const data = await res.json();
+      // Guard: if the server returned an empty / non-JSON body (e.g. backend
+      // is down and the Vite proxy returned an HTML error page), parse safely.
+      let data;
+      try {
+        data = await res.json();
+      } catch (_parseErr) {
+        throw new Error(
+          'Could not reach the mail server. Please make sure the backend is running and try again.'
+        );
+      }
 
       if (res.ok && data.success) {
         setStatus('success');
+        setToast({
+          type: 'success',
+          message: `Thanks ${form.name.split(' ')[0]}! We've received your message and will reply within one business day. A confirmation has been sent to ${form.email}.`,
+        });
       } else if (res.status === 422 && data.errors) {
         // Server returned field-level validation errors
         setErrors(data.errors);
@@ -97,12 +112,13 @@ export default function Contact() {
         throw new Error(data.message || 'Something went wrong. Please try again.');
       }
     } catch (err) {
-      setStatus('error');
-      setServerMsg(
+      const msg =
         err.message === 'Failed to fetch'
           ? 'Could not reach the mail server. Please check your connection or try again later.'
-          : err.message
-      );
+          : err.message;
+      setStatus('error');
+      setServerMsg(msg);
+      setToast({ type: 'error', message: msg });
     }
   };
 
@@ -120,6 +136,16 @@ export default function Contact() {
 
   return (
     <>
+      {/* ── Toast notification ── */}
+      {toast && (
+        <Toast
+          key={Date.now()}
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <Helmet>
         <title>Contact Us | Hemmingway Technologies</title>
         <meta

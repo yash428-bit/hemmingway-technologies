@@ -1,12 +1,12 @@
 /**
  * mailer.js — Hemmingway Technologies Contact Form Backend
  * ─────────────────────────────────────────────────────────
- * Stack : Express + Nodemailer (Gmail / OAuth2-ready)
+ * Stack : Express + Resend (https://resend.com)
  * Route : POST /api/send
  *
  * Usage:
  *   1.  cd backend
- *   2.  cp .env.example .env          ← fill in GMAIL_USER + GMAIL_APP_PASSWORD
+ *   2.  cp .env.example .env          ← fill in RESEND_API_KEY + FROM_EMAIL + RECIPIENT_EMAIL
  *   3.  npm install
  *   4.  npm run dev   (nodemon)  OR  npm start  (node)
  */
@@ -14,25 +14,40 @@
 'use strict';
 
 require('dotenv').config();
-const express    = require('express');
-const nodemailer = require('nodemailer');
-const cors       = require('cors');
+const express  = require('express');
+const cors     = require('cors');
+const { Resend } = require('resend');
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const PORT           = process.env.PORT           || 5000;
-const GMAIL_USER     = process.env.GMAIL_USER;
-const GMAIL_PASS     = process.env.GMAIL_APP_PASSWORD;
-const RECIPIENT      = process.env.RECIPIENT_EMAIL || GMAIL_USER;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const FROM_EMAIL     = process.env.FROM_EMAIL     || 'onboarding@resend.dev';
+const RECIPIENT      = process.env.RECIPIENT_EMAIL;
 const CORS_ORIGIN    = process.env.CORS_ORIGIN    || 'http://localhost:5173';
 
-// Fail fast if credentials are missing
-if (!GMAIL_USER || !GMAIL_PASS) {
+// Set MAIL_ENABLED=false in .env to hard-disable sending (spam protection).
+const mailEnabled = process.env.MAIL_ENABLED !== 'false';
+
+// Fail fast if credentials are missing or still placeholder
+if (!RESEND_API_KEY || RESEND_API_KEY.startsWith('re_xxxx')) {
   console.error(
-    '\n❌  Missing credentials!\n' +
-    '    Please copy .env.example → .env and fill in GMAIL_USER + GMAIL_APP_PASSWORD.\n'
+    '\n❌  Invalid or missing RESEND_API_KEY!\n' +
+    '    Open backend/.env and replace the placeholder with your real Resend API key.\n' +
+    '    Get one at: https://resend.com/api-keys\n'
   );
   process.exit(1);
 }
+
+if (!RECIPIENT) {
+  console.error(
+    '\n❌  Missing RECIPIENT_EMAIL!\n' +
+    '    Please set RECIPIENT_EMAIL in your .env file.\n'
+  );
+  process.exit(1);
+}
+
+// ── Resend client ─────────────────────────────────────────────────────────────
+const resend = new Resend(RESEND_API_KEY);
 
 // ── App setup ─────────────────────────────────────────────────────────────────
 const app = express();
@@ -45,25 +60,6 @@ app.use(
 );
 
 app.use(express.json({ limit: '50kb' }));
-
-// ── Nodemailer transporter ────────────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: GMAIL_USER,
-    pass: GMAIL_PASS,   // 16-char Gmail App Password (NOT your real password)
-  },
-});
-
-// Verify SMTP connection on startup
-transporter.verify((err) => {
-  if (err) {
-    console.error('❌  SMTP connection failed:', err.message);
-    console.error('    Check your GMAIL_USER and GMAIL_APP_PASSWORD in .env');
-  } else {
-    console.log('✅  SMTP connection verified — ready to send mail');
-  }
-});
 
 // ── Helper: sanitise user input (strip HTML tags) ────────────────────────────
 const sanitise = (str = '') => String(str).replace(/<[^>]*>/g, '').trim().slice(0, 2000);
@@ -81,6 +77,16 @@ const SERVICE_LABELS = {
 
 // ── POST /api/send ────────────────────────────────────────────────────────────
 app.post('/api/send', async (req, res) => {
+  // ── Kill-switch guard ────────────────────────────────────────────────────
+  if (!mailEnabled) {
+    console.warn('🛑  Mail sending is disabled. Request blocked.');
+    return res.status(503).json({
+      success: false,
+      disabled: true,
+      message: 'Mail sending is currently disabled. Please try again later.',
+    });
+  }
+
   try {
     const { name, email, company, service, message } = req.body ?? {};
 
@@ -159,7 +165,7 @@ app.post('/api/send', async (req, res) => {
 </body>
 </html>`.trim();
 
-    // ── Plain-text auto-reply sent to the sender ─────────────────────────────
+    // ── Auto-reply HTML sent to the sender ───────────────────────────────────
     const htmlAutoReply = `
 <!DOCTYPE html>
 <html lang="en">
@@ -197,13 +203,13 @@ app.post('/api/send', async (req, res) => {
 </body>
 </html>`.trim();
 
-    // ── Send both emails concurrently ───────────────────────────────────────
-    await Promise.all([
+    // ── Send both emails concurrently via Resend ─────────────────────────────
+    const [adminResult, replyResult] = await Promise.all([
       // 1️⃣  Notification to the business inbox
-      transporter.sendMail({
-        from:     `"Hemmingway Technologies Website" <${GMAIL_USER}>`,
-        to:       RECIPIENT,
-        replyTo:  safeEmail,
+      resend.emails.send({
+        from:     `Hemmingway Technologies Website <${FROM_EMAIL}>`,
+        to:       [RECIPIENT],
+        reply_to: safeEmail,
         subject:  `📩 New Enquiry from ${safeName}${safeCompany !== 'N/A' ? ` · ${safeCompany}` : ''}`,
         html:     htmlToAdmin,
         text:
@@ -216,9 +222,9 @@ app.post('/api/send', async (req, res) => {
       }),
 
       // 2️⃣  Auto-reply confirmation to the sender
-      transporter.sendMail({
-        from:    `"Hemmingway Technologies" <${GMAIL_USER}>`,
-        to:      safeEmail,
+      resend.emails.send({
+        from:    `Hemmingway Technologies <${FROM_EMAIL}>`,
+        to:      [safeEmail],
         subject: `We've received your message, ${safeName.split(' ')[0]}! 👋`,
         html:    htmlAutoReply,
         text:
@@ -229,7 +235,21 @@ app.post('/api/send', async (req, res) => {
       }),
     ]);
 
-    console.log(`✉️  Mail sent → ${RECIPIENT} | reply-to: ${safeEmail} | ${new Date().toISOString()}`);
+    // Check for Resend-level errors
+    if (adminResult.error) {
+      console.error('❌  Resend admin email error:', adminResult.error);
+      throw new Error(adminResult.error.message || 'Failed to send admin notification.');
+    }
+    if (replyResult.error) {
+      // Non-fatal — auto-reply failure shouldn't block success
+      console.warn('⚠️  Resend auto-reply error:', replyResult.error);
+    }
+
+    console.log(
+      `✉️  Mail sent via Resend → ${RECIPIENT} | reply-to: ${safeEmail} | ` +
+      `adminId: ${adminResult.data?.id} | replyId: ${replyResult.data?.id} | ${new Date().toISOString()}`
+    );
+
     return res.status(200).json({ success: true, message: 'Email sent successfully.' });
 
   } catch (err) {
