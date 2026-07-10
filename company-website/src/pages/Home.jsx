@@ -192,7 +192,7 @@ export default function Home() {
           <Antigravity
             count={250}
             magnetRadius={8}
-            ringRadius={10}
+            ringRadius={8}
             waveSpeed={0.4}
             waveAmplitude={1}
             particleSize={1.4}
