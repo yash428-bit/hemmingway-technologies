@@ -9,42 +9,48 @@ const TEAM_MEMBERS = [
     role: 'Chief Executive Officer',
     bio: '',
     Icon: Briefcase,
-    expertise: ['Strategy', 'Leadership', 'Architecture']
+    expertise: ['Strategy', 'Leadership', 'Architecture'],
+    linkedin: 'https://www.linkedin.com/in/devyansh-dingolia',
   },
   {
     name: 'Janardhan Verma',
     role: 'Chief Technology Officer & Co-CEO',
     bio: '',
     Icon: Code,
-    expertise: ['AI/ML', 'Cloud', 'DevOps']
+    expertise: ['AI/ML', 'Cloud', 'DevOps'],
+    linkedin: 'https://www.linkedin.com/in/janardhan-verma-3b7a89326/',
   },
   {
     name: 'Manish Mandia',
     role: 'Chief Product Officer',
     bio: '',
     Icon: Cog,
-    expertise: ['Full Stack', 'UI/UX', 'Performance']
+    expertise: ['Full Stack', 'UI/UX', 'Performance'],
+    linkedin: 'https://www.linkedin.com/in/manish-mandia-367572323/',
   },
   {
     name: 'Yash Kumar',
     role: 'Chief Finance Officer',
     bio: '',
     Icon: Palette,
-    expertise: ['UI/UX', 'Design Systems', 'Branding']
+    expertise: ['UI/UX', 'Design Systems', 'Branding'],
+    linkedin: 'https://www.linkedin.com/in/yash-kumar-7959a3325/',
   },
   {
     name: 'Sakshi Yadav',
     role: 'Chief Marketing Officer',
     bio: '',
     Icon: Monitor,
-    expertise: ['Marketing', 'Performance', 'Animation']
+    expertise: ['Marketing', 'Performance', 'Animation'],
+    linkedin: 'https://www.linkedin.com/in/sakshi-y-b23008324/',
   },
   {
     name: 'Bhardwaj Kartikay',
     role: 'Chief Operations Officer',
     bio: '',
     Icon: Lock,
-    expertise: ['Security', 'Compliance', 'Cryptography']
+    expertise: ['Security', 'Compliance', 'Cryptography'],
+    linkedin: 'https://www.linkedin.com/in/bhardwaj-kartikay/',
   },
 ];
 
@@ -87,7 +93,14 @@ export default function Team() {
                     ))}
                   </div>
                   <div className="team-card-hover">
-                    <a href="" className="team-card-link">Get in touch →</a>
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="team-card-link"
+                    >
+                      Get in touch →
+                    </a>
                   </div>
                 </div>
               );
