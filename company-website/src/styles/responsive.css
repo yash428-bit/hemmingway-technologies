@@ -4,6 +4,26 @@
     }
 }
 
+@media (max-width: 480px) {
+    .select-listbox {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .blog-post-container {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-related {
+        position: static;
+    }
+
+    .blog-post {
+        padding: 28px;
+    }
+}
+
 @media (max-width: 450px) {
     .nav-inner {
         display: none !important;
@@ -42,8 +62,11 @@
         width: calc(100vw - 16px) !important;
         max-width: none !important;
         transform: none !important;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
         box-sizing: border-box !important;
+    }
+
+    .nav-inner-mob .menu-dropdown-inner {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6) !important;
     }
 
     .nav-inner-mob .dropdown-products {
@@ -52,7 +75,7 @@
         gap: 8px !important;
     }
 
-    .nav-inner-mob .menu-dropdown::before {
+    .nav-inner-mob .menu-dropdown-inner::before {
         left: 85% !important;
     }
 

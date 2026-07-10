@@ -154,7 +154,7 @@ export default function Navbar({ theme, toggleTheme }) {
             <NavLink to="/" label="Home" isActive={isActive('/')} />
             <NavLink to="/about" label="About" isActive={isActive('/about')} />
             <NavLink to="/team" label="Team" isActive={isActive('/team')} />
-            {/* <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} /> */}
+            <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} />
 
             <MenuItem label="Solutions" active={activeMenu} setActive={setActiveMenu}>
               <div className="dropdown-products">
@@ -202,7 +202,7 @@ export default function Navbar({ theme, toggleTheme }) {
             <NavLink to="/" label="Home" isActive={isActive('/')} />
             <NavLink to="/about" label="About" isActive={isActive('/about')} />
             <NavLink to="/team" label="Team" isActive={isActive('/team')} />
-            {/* <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} /> */}
+            <NavLink to="/blog" label="Blog" isActive={isActive('/blog')} />
 
             <MenuItem label="Solutions" active={activeMenu} setActive={setActiveMenu}>
               <div className="dropdown-products">

@@ -14,6 +14,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Team from './pages/Team';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import PrivacyPolicy from './pages/docs/legal/PrivacyPolicy';
 import Terms from './pages/docs/legal/Terms';
 import CookiePolicy from './pages/docs/legal/CookiePolicy';
@@ -41,6 +42,7 @@ function AppContent({ theme, toggleTheme }) {
           <Route path="/about" element={<About />} />
           <Route path="/team" element={<Team />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/docs/legal/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/docs/legal/terms" element={<Terms />} />

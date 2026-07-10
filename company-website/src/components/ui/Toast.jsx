@@ -31,7 +31,7 @@ const VARIANTS = {
   },
 };
 
-export default function Toast({ message, type = 'success', onClose }) {
+export default function Toast({ message, type = 'success', title, onClose }) {
   const v = VARIANTS[type] ?? VARIANTS.success;
   const Icon = v.icon;
 
@@ -136,7 +136,7 @@ export default function Toast({ message, type = 'success', onClose }) {
                 marginBottom: '4px',
               }}
             >
-              {type === 'success' ? 'Message Sent!' : type === 'error' ? 'Send Failed' : 'Notice'}
+              {title ?? (type === 'success' ? 'Message Sent!' : type === 'error' ? 'Send Failed' : 'Notice')}
             </div>
             <div
               style={{

@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-// useScrollReveal — triggers .visible class when elements enter viewport
-export function useScrollReveal() {
+// useScrollReveal — triggers .visible class when elements enter viewport.
+// Pass a `deps` array when the page conditionally renders different
+// .fade-up/.fade-in elements after mount (e.g. filtering a list) — otherwise
+// elements added after the initial mount are never observed and stay hidden.
+export function useScrollReveal(deps = []) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -18,7 +21,8 @@ export function useScrollReveal() {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }
 
 // useParallax — simple parallax on scroll

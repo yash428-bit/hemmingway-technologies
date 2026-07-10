@@ -1,90 +1,81 @@
 import { useRef, useState } from 'react';
-import { Bot, Zap, Lock, Palette, Database, Rocket } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useAnimations';
 import { Helmet } from 'react-helmet-async';
+import { BLOG_POSTS, CATEGORY_ICONS } from '../data/blogPosts';
+import Toast from '../components/ui/Toast';
 
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: 'Building AI-Powered Systems at Scale',
-    excerpt: 'Learn how we architected a machine learning pipeline that processes 1M+ events per day with sub-100ms latency.',
-    category: 'AI/ML',
-    author: 'Natasha Voss',
-    date: '2024-12-01',
-    readTime: '8 min read',
-    Icon: Bot,
-    tags: ['AI', 'Performance', 'Architecture']
-  },
-  {
-    id: 2,
-    title: 'React Performance Optimizations That Saved 40% Bundle Size',
-    excerpt: 'A deep dive into code splitting, lazy loading, and tree-shaking strategies for modern web apps.',
-    category: 'Frontend',
-    author: 'Marcus Chen',
-    date: '2024-11-28',
-    readTime: '10 min read',
-    Icon: Zap,
-    tags: ['React', 'Performance', 'Bundling']
-  },
-  {
-    id: 3,
-    title: 'Zero-Trust Security in Microservices',
-    excerpt: 'How we implemented zero-trust architecture across 50+ microservices without breaking deployments.',
-    category: 'Security',
-    author: 'Elena Rodriguez',
-    date: '2024-11-15',
-    readTime: '12 min read',
-    Icon: Lock,
-    tags: ['Security', 'Microservices', 'DevOps']
-  },
-  {
-    id: 4,
-    title: 'Design Systems That Scale With Your Team',
-    excerpt: 'Building and maintaining a design system for 100+ products. Lessons learned and best practices.',
-    category: 'Design',
-    author: 'James Park',
-    date: '2024-11-01',
-    readTime: '7 min read',
-    Icon: Palette,
-    tags: ['Design', 'System Design', 'Collaboration']
-  },
-  {
-    id: 5,
-    title: 'Database Optimization: From Hours to Milliseconds',
-    excerpt: 'Query optimization techniques that reduced our most expensive queries from 2 hours to <100ms.',
-    category: 'Database',
-    author: 'Layla Osei',
-    date: '2024-10-25',
-    readTime: '9 min read',
-    Icon: Database,
-    tags: ['Database', 'SQL', 'Performance']
-  },
-  {
-    id: 6,
-    title: 'The Future of Full-Stack Development',
-    excerpt: 'Why the traditional frontend/backend split is becoming obsolete. An exploration of modern full-stack frameworks.',
-    category: 'Backend',
-    author: 'Alex Hemmingway',
-    date: '2024-10-10',
-    readTime: '11 min read',
-    Icon: Rocket,
-    tags: ['Full Stack', 'Architecture', 'Future Tech']
-  },
-];
+// Dev → Vite proxy forwards /api/* to http://localhost:5000
+// Prod → set VITE_API_URL to your deployed backend URL
+const API_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api/subscribe`
+  : '/api/subscribe';
 
 const CATEGORIES = ['All', ...new Set(BLOG_POSTS.map(p => p.category))];
 
 export default function Blog() {
-  useScrollReveal();
   const gridRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [subscribeEmail, setSubscribeEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState('idle'); // idle | loading
+  const [toast, setToast] = useState(null);
 
   const filteredPosts = selectedCategory === 'All'
     ? BLOG_POSTS
     : BLOG_POSTS.filter(p => p.category === selectedCategory);
 
+  // Re-run reveal-on-scroll whenever the filter changes — otherwise cards
+  // newly mounted for a different category are never observed and stay hidden.
+  useScrollReveal([selectedCategory]);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setSubscribeStatus('loading');
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: subscribeEmail }),
+      });
+
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error('Could not reach the server. Please try again later.');
+      }
+
+      if (res.ok && data.success) {
+        setToast({ type: 'success', title: 'Subscribed!', message: "You're on the list — we'll send new posts as they go up." });
+        setSubscribeEmail('');
+      } else if (res.status === 422 && data.errors?.email) {
+        setToast({ type: 'error', title: 'Invalid Email', message: data.errors.email });
+      } else {
+        throw new Error(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      const msg = err.message === 'Failed to fetch'
+        ? 'Could not reach the server. Please check your connection or try again later.'
+        : err.message;
+      setToast({ type: 'error', title: 'Subscription Failed', message: msg });
+    } finally {
+      setSubscribeStatus('idle');
+    }
+  };
+
   return (
     <>
+      {toast && (
+        <Toast
+          key={Date.now()}
+          type={toast.type}
+          title={toast.title}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+
       <Helmet>
         <title>Blog | Hemmingway Technologies</title>
 
@@ -116,9 +107,9 @@ export default function Blog() {
         <div className="container">
           <div ref={gridRef} className="blog-grid">
             {filteredPosts.map((post, i) => {
-              const IconComponent = post.Icon;
+              const IconComponent = CATEGORY_ICONS[post.category];
               return (
-                <article key={post.id} className="blog-card fade-up" style={{ transitionDelay: `${i * 0.08}s` }}>
+                <article key={post.slug} className="blog-card fade-up" style={{ transitionDelay: `${i * 0.08}s` }}>
                   <div className="blog-card-header">
                     <span className="blog-emoji"><IconComponent size={24} /></span>
                     <span className="blog-category">{post.category}</span>
@@ -136,7 +127,7 @@ export default function Blog() {
                       <span className="blog-date">{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                       <span className="blog-read-time">{post.readTime}</span>
                     </div>
-                    <a href={`#blog/${post.id}`} className="blog-link">Read →</a>
+                    <Link to={`/blog/${post.slug}`} className="blog-link">Read →</Link>
                   </div>
                 </article>
               );
@@ -156,9 +147,20 @@ export default function Blog() {
           <div className="subscribe-box">
             <h2>Stay Updated</h2>
             <p>Get new insights delivered to your inbox every week.</p>
-            <form className="subscribe-form" onSubmit={e => { e.preventDefault(); alert('Thanks for subscribing!'); }}>
-              <input type="email" placeholder="your@email.com" required />
-              <button type="submit" className="btn btn-primary">Subscribe</button>
+            <form className="subscribe-form" onSubmit={handleSubscribe}>
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={subscribeEmail}
+                onChange={e => setSubscribeEmail(e.target.value)}
+                disabled={subscribeStatus === 'loading'}
+                required
+              />
+              <button type="submit" className="btn btn-primary" disabled={subscribeStatus === 'loading'}>
+                {subscribeStatus === 'loading'
+                  ? <Loader2 size={16} style={{ animation: 'spin 0.9s linear infinite' }} />
+                  : 'Subscribe'}
+              </button>
             </form>
           </div>
         </div>
