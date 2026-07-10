@@ -44,13 +44,13 @@
   box-shadow: 0 4px 24px rgba(99, 103, 241, 0.07);
 }
 
-[data-theme="light"] .menu-dropdown {
+[data-theme="light"] .menu-dropdown-inner {
   background: rgba(255, 255, 255, 1) !important;
   border-color: rgba(99, 103, 241, 0.25) !important;
   box-shadow: 0 8px 32px rgba(99, 103, 241, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
 }
 
-[data-theme="light"] .menu-dropdown::before {
+[data-theme="light"] .menu-dropdown-inner::before {
   background: rgba(255, 255, 255, 1) !important;
 }
 
@@ -211,24 +211,26 @@
   background: rgba(99, 103, 241, 0.12);
 }
 
-/* Dropdown panel */
+/* Dropdown panel
+   NOTE: .menu-dropdown is an invisible hit-box that starts flush against the
+   trigger button (top: 100%, no gap) so the cursor never crosses "dead" empty
+   space between the button and the visible card — that gap was what caused
+   the dropdown to close the instant you tried to move into it. The 10px
+   visual gap is recreated with padding-top instead, which stays inside the
+   hoverable area. The actual card styling lives on .menu-dropdown-inner. */
 .menu-dropdown {
   position: absolute;
-  top: calc(100% + 10px);
+  top: 100%;
   left: 50%;
-  transform: translateX(-50%);
   min-width: 240px;
   max-width: calc(100vw - 40px);
-  background: rgba(8, 8, 20, 1);
-  border: 1px solid rgba(99, 103, 241, 0.35);
-  border-radius: 16px;
-  padding: 16px;
+  padding-top: 10px;
   opacity: 0;
   pointer-events: none;
   transform: translateX(-50%) translateY(-8px) scale(0.92);
+  transform-origin: top center;
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 200;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.08);
 }
 
 .menu-dropdown.open {
@@ -237,8 +239,21 @@
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
+.menu-dropdown-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(8, 8, 20, 1);
+  border: 1px solid rgba(99, 103, 241, 0.35);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  animation: slideInDropdown 0.3s ease forwards;
+}
+
 /* arrow tip */
-.menu-dropdown::before {
+.menu-dropdown-inner::before {
   content: '';
   position: absolute;
   top: -6px;
@@ -248,18 +263,6 @@
   height: 6px;
   background: rgba(8, 8, 20, 0.95);
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  transition: opacity 0.3s ease;
-}
-
-.menu-dropdown.open::before {
-  opacity: 1;
-}
-
-.menu-dropdown-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  animation: slideInDropdown 0.3s ease forwards;
 }
 
 @keyframes slideInDropdown {
