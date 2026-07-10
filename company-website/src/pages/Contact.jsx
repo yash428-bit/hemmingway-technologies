@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
-import { CheckCircle, ChevronDown, AlertCircle, Loader2, XCircle } from 'lucide-react';
+import { useState, useRef, useCallback, useEffect, useId } from 'react';
+import { CheckCircle, ChevronDown, Check, AlertCircle, Loader2, XCircle } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useAnimations';
 import { Helmet } from 'react-helmet-async';
 import Toast from '../components/ui/Toast';
@@ -31,6 +31,111 @@ function validate(form) {
                             errs.email   = 'Please enter a valid email address.';
   if (!form.message.trim()) errs.message = 'Please describe your project.';
   return errs;
+}
+
+// ── Custom listbox (replaces native <select> — its OS-rendered popup can't be
+//    themed with border/border-radius/shadow in any browser) ──────────────────
+function ServiceSelect({ id, value, onChange, disabled, hasError, describedBy }) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const rootRef = useRef(null);
+  const listboxId = useId();
+
+  const selected = SERVICES.find((s) => s.value === value);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e) => {
+      if (rootRef.current && !rootRef.current.contains(e.target)) setOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  const commit = (val) => {
+    onChange({ target: { name: 'service', value: val } });
+    setOpen(false);
+  };
+
+  const handleTriggerKeyDown = (e) => {
+    if (disabled) return;
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setActiveIndex(Math.max(0, SERVICES.findIndex((s) => s.value === value)));
+      setOpen(true);
+    }
+  };
+
+  const handleListKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIndex((i) => Math.min(SERVICES.length - 1, i + 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIndex((i) => Math.max(0, i - 1));
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (activeIndex >= 0) commit(SERVICES[activeIndex].value);
+    }
+  };
+
+  return (
+    <div className="select-wrapper" ref={rootRef}>
+      <button
+        type="button"
+        id={id}
+        className={`select-trigger${open ? ' open' : ''}`}
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-invalid={hasError}
+        aria-describedby={describedBy}
+        onClick={() => {
+          if (disabled) return;
+          setActiveIndex(Math.max(0, SERVICES.findIndex((s) => s.value === value)));
+          setOpen((o) => !o);
+        }}
+        onKeyDown={handleTriggerKeyDown}
+      >
+        <span className={selected ? 'select-value' : 'select-placeholder'}>
+          {selected ? selected.label : 'Select a service...'}
+        </span>
+      </button>
+
+      <span className={`select-chevron${open ? ' open' : ''}`} aria-hidden="true">
+        <ChevronDown size={18} strokeWidth={2.2} />
+      </span>
+
+      <ul
+        id={listboxId}
+        role="listbox"
+        className={`select-listbox${open ? ' open' : ''}`}
+        tabIndex={-1}
+        onKeyDown={handleListKeyDown}
+      >
+        {SERVICES.map((s, i) => (
+          <li
+            key={s.value}
+            role="option"
+            aria-selected={s.value === value}
+            className={`select-option${s.value === value ? ' selected' : ''}${i === activeIndex ? ' active' : ''}`}
+            onMouseEnter={() => setActiveIndex(i)}
+            onClick={() => commit(s.value)}
+          >
+            <span>{s.label}</span>
+            {s.value === value && <Check size={15} strokeWidth={2.5} />}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default function Contact() {
@@ -100,10 +205,6 @@ export default function Contact() {
 
       if (res.ok && data.success) {
         setStatus('success');
-        setToast({
-          type: 'success',
-          message: `Thanks ${form.name.split(' ')[0]}! We've received your message and will reply within one business day. A confirmation has been sent to ${form.email}.`,
-        });
       } else if (res.status === 422 && data.errors) {
         // Server returned field-level validation errors
         setErrors(data.errors);
@@ -338,32 +439,15 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* ── Service select with custom chevron ── */}
+                  {/* ── Service custom listbox ── */}
                   <div className="form-group">
                     <label htmlFor="service">Service of Interest</label>
-                    <div className="select-wrapper">
-                      <select
-                        id="service"
-                        name="service"
-                        value={form.service}
-                        onChange={handleChange}
-                        disabled={status === 'loading'}
-                        style={{
-                          color: form.service ? 'var(--text-bright)' : 'var(--text-muted)',
-                          WebkitTextFillColor: form.service
-                            ? 'var(--text-bright)'
-                            : 'var(--text-muted)',
-                        }}
-                      >
-                        <option value="">Select a service...</option>
-                        {SERVICES.map((s) => (
-                          <option key={s.value} value={s.value}>{s.label}</option>
-                        ))}
-                      </select>
-                      <span className="select-chevron" aria-hidden="true">
-                        <ChevronDown size={18} strokeWidth={2.2} />
-                      </span>
-                    </div>
+                    <ServiceSelect
+                      id="service"
+                      value={form.service}
+                      onChange={handleChange}
+                      disabled={status === 'loading'}
+                    />
                   </div>
 
                   {/* ── Message (auto-expanding textarea) ── */}
