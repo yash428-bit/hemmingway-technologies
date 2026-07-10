@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Code, Palette, Cog, Trophy, MapPin, IndianRupee, Users } from 'lucide-react';
+import { BadgeInfo, Building2, Hash, Landmark, Layers3, School2, Trophy, MapPin, IndianRupee, Users } from 'lucide-react';
 import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
 import EncryptedText from '../components/ui/EncryptedText';
 import CometCard from '../components/ui/CometCard';
@@ -15,12 +15,12 @@ const VALUES = [
 ];
 
 const SIH_META = [
-  { icon: '🆔', label: 'Problem ID', value: 'SIH25181' },
-  { icon: '🏛️', label: 'Ministry', value: 'Ministry of Coal (MoC)' },
-  { icon: '🏢', label: 'Organisation', value: 'CMPDI' },
-  { icon: '🏫', label: 'Institution', value: 'NSUT, Delhi' },
-  { icon: '⚡', label: 'Category', value: 'Software' },
-  { icon: '🔢', label: 'Team ID', value: '102387' },
+  { icon: BadgeInfo, label: 'Problem ID', value: 'SIH25181' },
+  { icon: Landmark, label: 'Ministry', value: 'Ministry of Coal (MoC)' },
+  { icon: Building2, label: 'Organisation', value: 'CMPDI' },
+  { icon: School2, label: 'Institution', value: 'NSUT, Delhi' },
+  { icon: Layers3, label: 'Category', value: 'Software' },
+  { icon: Hash, label: 'Team ID', value: '102387' },
 ];
 
 const FOUNDERS = ['Janardhan Verma', 'Devyansh Dingolia', 'Manish Mandia', 'Yash Kumar', 'Bhardwaj Kartikay', 'Sakshi Yadav'];
@@ -50,7 +50,7 @@ export default function About() {
             <span className="gradient-text">for ambitious teams</span>
           </h1>
           <p>
-            Six NSUT founders. One hackathon win. A company born from 36 hours of relentless building.
+            6 NSUT Founders. One hackathon win. <br /> A company born from 36 hours of relentless building.
           </p>
         </div>
       </section>
@@ -68,10 +68,10 @@ export default function About() {
               </h2>
 
               <p className="fade-up origin-lead" style={{ transitionDelay: '0.1s' }}>
-                Team <strong>Vajra Dev</strong> from NETAJI SUBHAS UNIVERSITY OF TECHNOLOGY, Delhi was assigned
+                Team <strong>Vajra Dev</strong> from <strong>Netaji Subhas University of Technology, Delhi</strong> was assigned
                 a real government problem: build a software solution for the{' '}
-                <strong>Ministry of Coal</strong> through Central Mine Planning & Design Institute (CMPDI).
-                We shipped a production-grade app prototype in 36 sleepless hours — and won.
+                <strong>Ministry of Coal</strong> through <strong>Central Mine Planning & Design Institute (CMPDI)</strong>.
+                We shipped a production-grade app prototype in 36 sleepless hours — and Won!
               </p>
 
               {/* SIH Detail Card */}
@@ -91,7 +91,9 @@ export default function About() {
                 <div className="sih-meta-grid">
                   {SIH_META.map((m) => (
                     <div className="sih-meta-chip" key={m.label}>
-                      <span className="sih-meta-icon">{m.icon}</span>
+                      <span className="sih-meta-icon" aria-hidden="true">
+                        <m.icon size={14} />
+                      </span>
                       <div>
                         <div className="sih-meta-label">{m.label}</div>
                         <div className="sih-meta-value">{m.value}</div>
