@@ -133,7 +133,7 @@ export default function About() {
                   <span className="origin-stat-label">Non-stop build</span>
                 </div>
                 <div className="origin-stat-divider" />
-                <div className="origin-stat-divider" />
+                
                 <div className="origin-stat">
                   <MapPin size={14} style={{ color: 'var(--primary)', marginBottom: 2 }} />
                   <span className="origin-stat-label">NSUT, Delhi</span>
