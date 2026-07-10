@@ -11,12 +11,12 @@ const LEGAL_DOCS = [
   { to: '/docs/legal/disclaimer',     label: 'Disclaimer',       Icon: AlertTriangle },
 ];
 
-const FRONTEND_DOCS = [
-  { to: '/docs/frontend/overview',    label: 'Overview',         Icon: Layers },
-  { to: '/docs/frontend/design',      label: 'Design System',    Icon: Palette },
-  { to: '/docs/frontend/components',  label: 'Components',       Icon: Zap },
-  { to: '/docs/frontend/stack',       label: 'Tech Stack',       Icon: Code2 },
-];
+// const FRONTEND_DOCS = [
+//   { to: '/docs/frontend/overview',    label: 'Overview',         Icon: Layers },
+//   { to: '/docs/frontend/design',      label: 'Design System',    Icon: Palette },
+//   { to: '/docs/frontend/components',  label: 'Components',       Icon: Zap },
+//   { to: '/docs/frontend/stack',       label: 'Tech Stack',       Icon: Code2 },
+// ];
 
 function NavGroup({ heading, items, pathname }) {
   return (
