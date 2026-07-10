@@ -5,11 +5,11 @@ const PHOTOS = [
   {
     src: '/SIH photos/team photos.jfif',
     caption: 'Team Vajra Dev at Smart India Hackathon 2024',
-    label: 'Grand Finale — SIH 2024',
+    label: 'Grand Finale — SIH 2025',
   },
   {
     src: '/SIH photos/team photo 2.jfif',
-    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
+    caption: 'Team Hemmingway celebrating our SIH 2025 victory 🏆',
     label: 'Victory Moment',
   },
   {

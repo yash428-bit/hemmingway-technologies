@@ -5,6 +5,7 @@ import { useScrollReveal, useGSAPReveal } from '../hooks/useAnimations';
 import { Helmet } from "react-helmet-async";
 import EncryptedText from '../components/ui/EncryptedText';
 import CometCard from '../components/ui/CometCard';
+import Antigravity from '../components/ui/Antigravity';
 
 const SERVICES = [
   { Icon: Zap, title: 'Custom Software', desc: 'Bespoke applications engineered for your unique business challenges, built to scale from day one.' },
@@ -170,7 +171,7 @@ export default function Home() {
                 <h3>We're not a vendor — we're your engineering partner</h3>
                 <p>Dedicated teams, transparent communication, and a shared stake in your success. We celebrate when you win.</p>
                 <div style={{ display: 'flex', gap: '20px', marginTop: '28px', flexWrap: 'wrap' }}>
-                  {[['150+', 'Projects'], ['98%', 'Retention'], ['24/7', 'Support']].map(([n, l]) => (
+                  {[['98%', 'Retention'], ['24/7', 'Support']].map(([n, l]) => (
                     <div key={l}>
                       <div style={{ fontSize: '32px', fontWeight: 800, background: 'linear-gradient(135deg, #fff, var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{n}</div>
                       <div style={{ fontSize: '13px', color: 'var(--text-bright)', opacity: 0.7, marginTop: '4px' }}>{l}</div>
@@ -187,6 +188,21 @@ export default function Home() {
 
       {/* ── CTA ── */}
       <section className="cta-section">
+        <div className="cta-antigravity-bg">
+          <Antigravity
+            count={250}
+            magnetRadius={8}
+            ringRadius={10}
+            waveSpeed={0.4}
+            waveAmplitude={1}
+            particleSize={1.4}
+            lerpSpeed={0.05}
+            color={'#6367F1'}
+            autoAnimate={true}
+            particleVariance={1}
+            fieldStrength ={1}
+          />
+        </div>
         <div className="container">
           <div className="cta-inner fade-up">
             <div className="tag" style={{ margin: '0 auto 24px' }}>Ready to Build?</div>
