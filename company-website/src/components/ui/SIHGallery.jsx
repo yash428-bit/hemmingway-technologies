@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 const PHOTOS = [
   {
     src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    caption: 'Team Hemmingway celebrating our SIH 2024 victory 🏆',
-    label: 'Grand Finale — SIH 2024',
+    caption: 'Team Hemmingway celebrating our SIH 2025 victory 🏆',
+    label: 'Grand Finale — SIH 2025',
   },
   {
     src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
