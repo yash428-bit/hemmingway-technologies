@@ -85,10 +85,6 @@ export default function About() {
                     <div className="sih-card-title">Smart India Hackathon — Grand Winner</div>
                     <div className="sih-card-team">Team &ldquo;Vajra Dev&rdquo; · Team ID #102387</div>
                   </div>
-                  <div className="sih-prize">
-                    <IndianRupee size={16} />
-                    <span>1,50,000</span>
-                  </div>
                 </div>
 
                 {/* Meta chips */}
@@ -137,11 +133,7 @@ export default function About() {
                   <span className="origin-stat-label">Non-stop build</span>
                 </div>
                 <div className="origin-stat-divider" />
-                <div className="origin-stat">
-                  <span className="origin-stat-num gradient-text">₹1.5L</span>
-                  <span className="origin-stat-label">Prize won</span>
-                </div>
-                <div className="origin-stat-divider" />
+                
                 <div className="origin-stat">
                   <MapPin size={14} style={{ color: 'var(--primary)', marginBottom: 2 }} />
                   <span className="origin-stat-label">NSUT, Delhi</span>
