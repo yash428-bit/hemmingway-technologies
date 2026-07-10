@@ -1,7 +1,7 @@
 /**
  * mailer.js — Hemmingway Technologies Contact Form Backend
  * ─────────────────────────────────────────────────────────
- * Stack : Express + Resend (https://resend.com)
+ * Stack : Express + Resend
  * Route : POST /api/send
  *
  * Usage:
@@ -14,16 +14,18 @@
 'use strict';
 
 require('dotenv').config();
-const express  = require('express');
-const cors     = require('cors');
+const express = require('express');
 const { Resend } = require('resend');
+const cors = require('cors');
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const PORT           = process.env.PORT           || 5000;
+const PORT = process.env.PORT || 5000;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL     = process.env.FROM_EMAIL     || 'onboarding@resend.dev';
-const RECIPIENT      = process.env.RECIPIENT_EMAIL;
-const CORS_ORIGIN    = process.env.CORS_ORIGIN    || 'http://localhost:5173';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+const RECIPIENT = process.env.RECIPIENT_EMAIL;
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
+// Optional — powers the blog newsletter signup. Create one at https://resend.com/audiences
+const RESEND_AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID;
 
 // Set MAIL_ENABLED=false in .env to hard-disable sending (spam protection).
 const mailEnabled = process.env.MAIL_ENABLED !== 'false';
@@ -61,18 +63,20 @@ app.use(
 
 app.use(express.json({ limit: '50kb' }));
 
+console.log('✅  Resend client ready — sending from', FROM_EMAIL);
+
 // ── Helper: sanitise user input (strip HTML tags) ────────────────────────────
 const sanitise = (str = '') => String(str).replace(/<[^>]*>/g, '').trim().slice(0, 2000);
 
 // ── Field labels for display ──────────────────────────────────────────────────
 const SERVICE_LABELS = {
-  custom:   'Custom Software Development',
-  ai:       'AI & Machine Learning',
-  cloud:    'Cloud Architecture',
+  custom: 'Custom Software Development',
+  ai: 'AI & Machine Learning',
+  cloud: 'Cloud Architecture',
   security: 'Cybersecurity',
-  mobile:   'Mobile & Web Apps',
-  api:      'API & Integrations',
-  other:    'Other / Not Sure Yet',
+  mobile: 'Mobile & Web Apps',
+  api: 'API & Integrations',
+  other: 'Other / Not Sure Yet',
 };
 
 // ── POST /api/send ────────────────────────────────────────────────────────────
@@ -92,10 +96,10 @@ app.post('/api/send', async (req, res) => {
 
     // ── Server-side validation ──────────────────────────────────────────────
     const errors = {};
-    if (!name?.trim())    errors.name    = 'Full name is required.';
-    if (!email?.trim())   errors.email   = 'Email address is required.';
+    if (!name?.trim()) errors.name = 'Full name is required.';
+    if (!email?.trim()) errors.email = 'Email address is required.';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-                          errors.email   = 'Invalid email address.';
+      errors.email = 'Invalid email address.';
     if (!message?.trim()) errors.message = 'Project description is required.';
 
     if (Object.keys(errors).length > 0) {
@@ -103,8 +107,8 @@ app.post('/api/send', async (req, res) => {
     }
 
     // ── Sanitise ────────────────────────────────────────────────────────────
-    const safeName    = sanitise(name);
-    const safeEmail   = sanitise(email);
+    const safeName = sanitise(name);
+    const safeEmail = sanitise(email);
     const safeCompany = sanitise(company) || 'N/A';
     const safeService = SERVICE_LABELS[sanitise(service)] || sanitise(service) || 'N/A';
     const safeMessage = sanitise(message);
@@ -133,7 +137,7 @@ app.post('/api/send', async (req, res) => {
   <div class="wrapper">
     <div class="header">
       <h1>📩 New Contact Form Submission</h1>
-      <p>Received from hemmingway-technologies.com</p>
+      <p>Received from hemmingways.in</p>
     </div>
     <div class="body">
       <div class="field">
@@ -179,6 +183,10 @@ app.post('/api/send', async (req, res) => {
     .body   { padding: 36px 40px; line-height: 1.8; font-size: 15px; color: #c0c0d8; }
     .body strong { color: #fff; }
     .highlight { background: rgba(99,103,241,0.1); border: 1px solid rgba(99,103,241,0.25); border-radius: 10px; padding: 16px 20px; margin: 24px 0; font-size: 14px; }
+    .highlight-row { margin-bottom: 10px; }
+    .highlight-row:last-child { margin-bottom: 0; }
+    .highlight-label { font-weight: 700; color: #fff; }
+    .highlight-message { white-space: pre-wrap; word-break: break-word; margin-top: 4px; }
     .footer { padding: 20px 40px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 12px; color: #5a5a78; text-align: center; }
   </style>
 </head>
@@ -191,9 +199,13 @@ app.post('/api/send', async (req, res) => {
       <p>Hi <strong>${safeName}</strong>,</p>
       <p>Thank you for reaching out to <strong>Hemmingway Technologies</strong>. We've received your enquiry and one of our team members will be in touch within <strong>one business day</strong>.</p>
       <div class="highlight">
-        <strong>Your enquiry summary:</strong><br/>
-        Service: ${safeService}<br/>
-        Submitted: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
+        <div class="highlight-row"><span class="highlight-label">Company:</span> ${safeCompany}</div>
+        <div class="highlight-row"><span class="highlight-label">Service:</span> ${safeService}</div>
+        <div class="highlight-row"><span class="highlight-label">Submitted:</span> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST</div>
+        <div class="highlight-row">
+          <span class="highlight-label">Your message:</span>
+          <div class="highlight-message">${safeMessage}</div>
+        </div>
       </div>
       <p>In the meantime, feel free to explore our work or follow us on LinkedIn.</p>
       <p>— The Hemmingway Technologies Team</p>
@@ -207,11 +219,11 @@ app.post('/api/send', async (req, res) => {
     const [adminResult, replyResult] = await Promise.all([
       // 1️⃣  Notification to the business inbox
       resend.emails.send({
-        from:     `Hemmingway Technologies Website <${FROM_EMAIL}>`,
-        to:       [RECIPIENT],
+        from: `Hemmingway Technologies Website <${FROM_EMAIL}>`,
+        to: [RECIPIENT],
         reply_to: safeEmail,
-        subject:  `📩 New Enquiry from ${safeName}${safeCompany !== 'N/A' ? ` · ${safeCompany}` : ''}`,
-        html:     htmlToAdmin,
+        subject: `📩 New Enquiry from ${safeName}${safeCompany !== 'N/A' ? ` · ${safeCompany}` : ''}`,
+        html: htmlToAdmin,
         text:
           `New contact form submission\n\n` +
           `Name:    ${safeName}\n` +
@@ -223,17 +235,26 @@ app.post('/api/send', async (req, res) => {
 
       // 2️⃣  Auto-reply confirmation to the sender
       resend.emails.send({
-        from:    `Hemmingway Technologies <${FROM_EMAIL}>`,
-        to:      [safeEmail],
+        from: `Hemmingway Technologies <${FROM_EMAIL}>`,
+        to: [safeEmail],
         subject: `We've received your message, ${safeName.split(' ')[0]}! 👋`,
-        html:    htmlAutoReply,
+        html: htmlAutoReply,
         text:
           `Hi ${safeName},\n\n` +
-          `Thank you for contacting Hemmingway Technologies.\n` +
-          `We'll get back to you within one business day.\n\n` +
+          `Thank you for contacting Hemmingway Technologies. We'll get back to you within one business day.\n\n` +
+          `Your submission:\n` +
+          `Company: ${safeCompany}\n` +
+          `Service: ${safeService}\n` +
+          `Message:\n${safeMessage}\n\n` +
           `— The Hemmingway Technologies Team`,
       }),
     ]);
+
+    if (adminResult.error || replyResult.error) {
+      throw new Error(
+        adminResult.error?.message || replyResult.error?.message || 'Resend API error'
+      );
+    }
 
     // Check for Resend-level errors
     if (adminResult.error) {
@@ -257,6 +278,49 @@ app.post('/api/send', async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to send email. Please try again later.',
+    });
+  }
+});
+
+// ── POST /api/subscribe ───────────────────────────────────────────────────────
+app.post('/api/subscribe', async (req, res) => {
+  if (!mailEnabled) {
+    return res.status(503).json({ success: false, message: 'Signups are currently disabled.' });
+  }
+
+  if (!RESEND_AUDIENCE_ID) {
+    console.error('❌  /api/subscribe called but RESEND_AUDIENCE_ID is not set in .env');
+    return res.status(503).json({
+      success: false,
+      message: 'Newsletter signup is not configured yet. Please try again later.',
+    });
+  }
+
+  const { email } = req.body ?? {};
+  const safeEmail = sanitise(email);
+
+  if (!safeEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(safeEmail)) {
+    return res.status(422).json({ success: false, errors: { email: 'Please enter a valid email address.' } });
+  }
+
+  try {
+    const result = await resend.contacts.create({
+      email: safeEmail,
+      audienceId: RESEND_AUDIENCE_ID,
+      unsubscribed: false,
+    });
+
+    if (result.error) {
+      throw new Error(result.error.message || 'Resend API error');
+    }
+
+    console.log(`📬  New subscriber → ${safeEmail} | ${new Date().toISOString()}`);
+    return res.status(200).json({ success: true, message: 'Subscribed successfully.' });
+  } catch (err) {
+    console.error('❌  Failed to add subscriber:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Could not subscribe right now. Please try again later.',
     });
   }
 });
