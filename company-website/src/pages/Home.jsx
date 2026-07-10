@@ -170,14 +170,7 @@ export default function Home() {
                 <div className="bento-badge">Partnership</div>
                 <h3>We're not a vendor — we're your engineering partner</h3>
                 <p>Dedicated teams, transparent communication, and a shared stake in your success. We celebrate when you win.</p>
-                <div style={{ display: 'flex', gap: '20px', marginTop: '28px', flexWrap: 'wrap' }}>
-                  {[['98%', 'Retention'], ['24/7', 'Support']].map(([n, l]) => (
-                    <div key={l}>
-                      <div style={{ fontSize: '32px', fontWeight: 800, background: 'linear-gradient(135deg, #fff, var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{n}</div>
-                      <div style={{ fontSize: '13px', color: 'var(--text-bright)', opacity: 0.7, marginTop: '4px' }}>{l}</div>
-                    </div>
-                  ))}
-                </div>
+                
               </div>
             </CometCard>
           </div>
