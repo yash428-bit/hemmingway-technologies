@@ -1,16 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react'; // ChevronLeft/Right still used in lightbox
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const PHOTOS = [
   {
-    src: '/SIH photos/team photos.jfif',
-    caption: 'Team Vajra Dev at Smart India Hackathon 2025',
-    label: 'Grand Finale — SIH 2025',
-  },
-  {
-    src: '/SIH photos/team photo 2.jfif',
-    caption: 'Team Hemmingway celebrating our SIH 2025 victory 🏆',
-    label: 'Victory Moment',
+    src: '/SIH photos/taking trophy.jfif',
+    caption: 'Receiving the winning trophy — ₹1,50,000 prize',
+    label: 'Award Ceremony',
   },
   {
     src: '/SIH photos/explaing to judges.jfif',
@@ -18,9 +13,14 @@ const PHOTOS = [
     label: 'Project Presentation',
   },
   {
-    src: '/SIH photos/taking trophy.jfif',
-    caption: 'Receiving the winning trophy — ₹1,50,000 prize',
-    label: 'Award Ceremony',
+    src: '/SIH photos/team photos.jfif',
+    caption: 'Team Vajra Dev at Smart India Hackathon 2024',
+    label: 'Grand Finale — SIH 2025',
+  },
+  {
+    src: '/SIH photos/team photo 2.jfif',
+    caption: 'Team Vajra Dev during development phase of SIH 2025',
+    label: 'Development Phase',
   },
 ];
 
@@ -72,24 +72,26 @@ export default function SIHGallery() {
           <div
             className={`sih-slide ${isAnimating ? `slide-exit-${direction}` : 'slide-enter'}`}
           >
-            <img src={PHOTOS[current].src} alt={PHOTOS[current].caption} />
+            <img
+              src={PHOTOS[current].src}
+              alt={PHOTOS[current].caption}
+              onClick={() => setLightbox(true)}
+              style={{ cursor: 'zoom-in' }}
+            />
             <div className="sih-slide-overlay" />
             <div className="sih-slide-info">
               <span className="sih-slide-label">{PHOTOS[current].label}</span>
               <p className="sih-slide-caption">{PHOTOS[current].caption}</p>
             </div>
-            <button
-              className="sih-zoom-btn"
-              onClick={() => setLightbox(true)}
-              aria-label="Zoom photo"
-            >
-              <ZoomIn size={18} />
-            </button>
           </div>
 
-          {/* Click zones */}
-          <button className="sih-click-prev" onClick={prev} aria-label="Previous" />
-          <button className="sih-click-next" onClick={next} aria-label="Next" />
+          {/* Prev / Next arrows */}
+          <button className="sih-arrow sih-arrow-prev" onClick={prev} aria-label="Previous photo">
+            <ChevronLeft size={20} />
+          </button>
+          <button className="sih-arrow sih-arrow-next" onClick={next} aria-label="Next photo">
+            <ChevronRight size={20} />
+          </button>
         </div>
 
         {/* Thumbnail Strip */}
