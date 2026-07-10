@@ -1,8 +1,8 @@
 # Hemmingway Technologies — Mailer Backend
 
-A lightweight **Express + Nodemailer** server that handles contact form submissions from the frontend and delivers:
+A lightweight **Express + Resend** server that handles contact form submissions from the frontend and delivers:
 
-1. **A styled HTML notification email** → your business inbox (`manishmandia1576@gmail.com`)
+1. **A styled HTML notification email** → your business inbox
 2. **An auto-reply confirmation** → the sender's email address
 
 ---
@@ -24,18 +24,20 @@ Open `.env` and fill in:
 
 | Variable | Description |
 |---|---|
-| `GMAIL_USER` | Your Gmail address e.g. `manishmandia1576@gmail.com` |
-| `GMAIL_APP_PASSWORD` | 16-character Gmail App Password (**not** your real password) |
-| `RECIPIENT_EMAIL` | Where form submissions are delivered (defaults to `GMAIL_USER`) |
+| `RESEND_API_KEY` | API key from [resend.com/api-keys](https://resend.com/api-keys) |
+| `FROM_EMAIL` | Sending address — must be on a domain verified in Resend, or `onboarding@resend.dev` for testing |
+| `RECIPIENT_EMAIL` | Where form submissions are delivered |
 | `PORT` | Server port (default `5000`) |
 | `CORS_ORIGIN` | Frontend URL — `http://localhost:5173` for dev, your production domain for prod |
 
-### 3. Getting a Gmail App Password
-> You must have **2-Step Verification** enabled on your Google Account.
+### 3. Getting a Resend API key + verified domain
 
-1. Go to → [https://myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
-2. Select **"Mail"** and your device → click **Generate**
-3. Copy the **16-character code** (no spaces) into `GMAIL_APP_PASSWORD` in your `.env`
+1. Sign up at [resend.com](https://resend.com)
+2. Go to **API Keys** → create a new key → paste into `RESEND_API_KEY`
+3. Go to **Domains** → add your domain (e.g. `hemmingwaytech.com`) → add the DNS records Resend gives you (SPF/DKIM) at your registrar
+4. Once verified, set `FROM_EMAIL` to an address on that domain (e.g. `hello@hemmingwaytech.com`)
+
+Until your domain is verified, you can test with `FROM_EMAIL=onboarding@resend.dev` — but Resend restricts that address to only send to the email you signed up with.
 
 ### 4. Start the server
 
@@ -51,7 +53,7 @@ npm start
 
 The server will log:
 ```
-✅  SMTP connection verified — ready to send mail
+✅  Resend client ready — sending from onboarding@resend.dev
 🚀  Mailer backend running at http://localhost:5000
     POST http://localhost:5000/api/send
     GET  http://localhost:5000/api/health
@@ -105,7 +107,7 @@ After deploying, set the `VITE_API_URL` environment variable in the **frontend**
 
 ```
 backend/
-├── mailer.js        ← Express server + Nodemailer logic
+├── mailer.js        ← Express server + Resend logic
 ├── package.json
 ├── .env.example     ← Copy to .env and fill in credentials
 ├── .gitignore       ← Keeps .env and node_modules out of git
